@@ -1,0 +1,57 @@
+model:
+  use_one_hot: False
+  embedding_jk: sum
+  hidden_dim: 256
+  num_pool_layer: 3
+  jump: all
+  jump_weight: 1
+
+pool:
+  cut_norm: True
+  threshold: 0.5
+  act: sigmoid
+  with_query: False
+  lin_bias: False
+  
+MP:
+  num_mp_layer: 1  
+  method: PNA
+  heads: 2
+  use_edge: True
+  norm: LayerNorm
+  act: PReLU
+  jk: cat
+  act_first: False
+  
+FP:
+  query_fp: True
+  in_dim: 1489
+  hidden_dims: [256, 256, 256]
+  act: ReLU
+  norm: LayerNorm
+  
+predict:
+  dropout_rate: 0.3
+  jk: cat
+  graph_pool: sum
+  pool_first: False
+
+pretrain:
+  dropout_rate: 0.3
+  jk: cat
+  graph_pool: sum
+  pred_hidden_dim: 256
+  pool_first: False
+ 
+GEO:
+  heads: 8
+  num_mp_layer: 1
+  hidden_dim: 128
+  reduce: mean
+
+ST:
+  heads: 2
+  num_seed_points: 4
+  num_encoder_blocks: 1
+  num_decoder_blocks: 1
+  
